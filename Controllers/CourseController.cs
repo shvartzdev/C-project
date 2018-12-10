@@ -34,7 +34,7 @@ namespace Education.Controllers
 
         [HttpPost]
         [Route("api/course/create")]
-        public int create([FromBody]Course course)
+        public Course create([FromBody]Course course)
         {
             return courseRepositoryImpl.Create(course);
         }
@@ -47,8 +47,8 @@ namespace Education.Controllers
         }
 
         [HttpPut]
-        [Route("api/course/edit")]
-        public int Edit(Course course)
+        [Route("api/course/edit/{id}")]
+        public Course Edit([FromBody]Course course)
         {
             return courseRepositoryImpl.Update(course);
         }
