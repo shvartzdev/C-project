@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Education.Models;
+using Education.Models.Courses;
 using Education.DAL;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,22 +13,22 @@ namespace Education.Controllers
     public class CourseController : Controller
     {
         private readonly EducationContext _context;
-        private CourseRepository courseRepository;
+        private CourseRepositoryImpl courseRepositoryImpl;
 
         public CourseController(EducationContext context)
         {
             _context = context;
-            courseRepository =  new CourseRepository(_context);
+            courseRepositoryImpl =  new CourseRepositoryImpl(_context);
         }        
 
         [HttpGet]
         [Route("api/course/getall")]
         public ActionResult GetAll()
         {
-            //IEnumerable<Course> list = courseRepository.getAllCourses();
+            //IEnumerable<Course> list = courseRepositoryImplgetAllCourses();
             return Ok(new
             {
-                courses = courseRepository.getAllCourses()
+                courses = courseRepositoryImpl.getAllCourses()
             });
         }
 
@@ -36,35 +36,35 @@ namespace Education.Controllers
         [Route("api/course/create")]
         public int create([FromBody]Course course)
         {
-            return courseRepository.Create(course);
+            return courseRepositoryImpl.Create(course);
         }
 
         [HttpGet]
         [Route("api/course/details/{id}")]
         public Course details(int id)
         {
-            return courseRepository.GetCourse(id);
+            return courseRepositoryImpl.GetCourse(id);
         }
 
         [HttpPut]
         [Route("api/course/edit")]
         public int Edit(Course course)
         {
-            return courseRepository.Update(course);
+            return courseRepositoryImpl.Update(course);
         }
 
         [HttpDelete]
         [Route("api/course/delete/{id}")]
         public int Delete(int id)
         {
-            return courseRepository.Delete(id);
+            return courseRepositoryImpl.Delete(id);
         }
 
         [HttpGet]
         [Route("api/course/getcourselist")]
         public IEnumerable<Course> Details()
         {
-            return courseRepository.getAllCourses();
+            return courseRepositoryImpl.getAllCourses();
         }
     }
 }
