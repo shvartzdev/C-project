@@ -19,11 +19,19 @@ export default props => (
             <Glyphicon glyph='th-list' /> Tasks
           </NavItem>
         </LinkContainer>
+
+        <LinkContainer to={'/users'} exact>
+          <NavItem>
+            <Glyphicon glyph='th-list' /> Users
+          </NavItem>
+        </LinkContainer>
+
         <LinkContainer to={'/courses'}>
           <NavItem>
             <Glyphicon glyph='education' /> My Courses
           </NavItem>
         </LinkContainer>
+
         <LinkContainer to={'/fetchdata'}>
         <NavItem>
           <Glyphicon glyph='home'/>Profile
