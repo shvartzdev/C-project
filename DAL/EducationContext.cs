@@ -7,5 +7,6 @@ namespace Education.DAL
     {
         public EducationContext(DbContextOptions<EducationContext> options) : base(options) { }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<User> Users {get; set;}
     }
 }

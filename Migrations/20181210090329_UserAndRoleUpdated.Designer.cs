@@ -3,14 +3,16 @@ using Education.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Education.Migrations
 {
     [DbContext(typeof(EducationContext))]
-    partial class EducationContextModelSnapshot : ModelSnapshot
+    [Migration("20181210090329_UserAndRoleUpdated")]
+    partial class UserAndRoleUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
