@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Education.Models.Courses
 {
-    public class CourseRepository : CourseRepository
+    public class CourseRepositoryImpl : CourseRepository
     {
         private EducationContext db;
 
 
-        public CourseRepository(EducationContext context)
+        public CourseRepositoryImpl(EducationContext context)
         {
             this.db = context;
         }
