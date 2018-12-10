@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Education.DAL;
-using Education.Models;
+using Education.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Education.Models.Users
@@ -21,109 +21,75 @@ namespace Education.Models.Users
 
         public int Create(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public int Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User user = db.Users.Find(id);
+                if (user != null)
+                {
+                    db.Users.Remove(user);
+                }
+                db.SaveChanges();
+                return 1;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
+        private bool disposed = false;
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+                if (disposing)
+                    db.Dispose();
+            this.disposed = true;
+        }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public List<User> getAllUsers()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return db.Users.ToList();
+            }
+            catch
+            {
+                throw new NullReferenceException();
+            }
         }
 
         public User GetUser(int id)
         {
-            throw new NotImplementedException();
+            return db.Users.Find(id);
         }
 
         public int Update(User user)
         {
-            throw new NotImplementedException();
+           try {
+               db.SaveChanges();
+               return 1;
+           } catch {
+               throw;
+           }
         }
-
-        // public List<Course> getAllCourses()
-        // {
-        //     try
-        //     {
-        //         return db.Courses.ToList();
-        //     } catch
-        //     {
-        //         throw new NullReferenceException();
-        //     }
-        // }
-
-
-
-        // public Course GetCourse(int id)
-        // {
-        //     return db.Courses.Find(id);
-        // }
-
-        // public int Create (Course course)
-        // {
-        //     try
-        //     {
-        //         db.Courses.Add(course);
-        //         db.SaveChanges();
-        //         return 1;
-        //     }
-        //     catch
-        //     {
-        //         throw;
-        //     }
-        // }
-
-        // public int Update(Course course)
-        // {
-        //     try
-        //     {
-        //         // db.Entry(course).State = System.Data.Entity.EntityState.Modified;
-        //         db.SaveChanges();
-        //         return 1;
-        //     } catch
-        //     {
-        //         throw;
-        //     }
-        // }
-        // public int Delete(int id)
-        // {
-        //     try
-        //     {
-        //         Course course = db.Courses.Find(id);
-        //         if (course != null)
-        //             db.Courses.Remove(course);
-        //         db.SaveChanges();
-        //         return 1;
-        //     } catch
-        //     {
-        //         throw;
-        //     }
-        // }
-
-
-        // private bool disposed = false;
-
-        // public virtual void Dispose(bool disposing)
-        // {
-        //     if (!this.disposed)
-        //         if (disposing)
-        //             db.Dispose();
-        //     this.disposed = true;
-        // }
-
-        // public void Dispose()
-        // {
-        //     Dispose(true);
-        //     GC.SuppressFinalize(this);
-        // }
-
     }
 }
