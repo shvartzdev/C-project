@@ -12,8 +12,8 @@ namespace Education.Models.Courses
     {
         List<Course> getAllCourses();
         Course GetCourse(int id);
-        int Create(Course course);
-        int Update(Course course);
+        Course Create(Course course);
+        Course Update(Course course);
         int Delete(int id);
    
     }

@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+//using System.Data.Entity;
 using Education.DAL;
 using Education.Models;
 using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 
 namespace Education.Models.Courses
 {
@@ -37,13 +39,13 @@ namespace Education.Models.Courses
             return db.Courses.Find(id);
         }
 
-        public int Create (Course course)
+        public Course Create (Course course)
         {
             try
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return 1;
+                return course;
             }
             catch
             {
@@ -51,13 +53,16 @@ namespace Education.Models.Courses
             }
         }
 
-        public int Update(Course course)
+        public Course Update(Course course)
         {
             try
             {
-                // db.Entry(course).State = System.Data.Entity.EntityState.Modified;
+                if (course != null) 
+                    db.Entry(course).State=EntityState.Modified;
+                //  db.Entry(course).State = 
+                //     Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
-                return 1;
+                return course;
             } catch
             {
                 throw;
