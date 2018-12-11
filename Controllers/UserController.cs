@@ -28,7 +28,7 @@ namespace Education.Controllers
 
         [HttpPost]
         [Route("api/user/create")]
-        public int create([FromBody] User user) {
+        public User create([FromBody]User user) {
             return userRepositoryImpl.Create(user);
         }
 
