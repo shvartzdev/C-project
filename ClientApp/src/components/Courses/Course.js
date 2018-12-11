@@ -135,7 +135,7 @@ export default class Courses extends Component {
   }
 
 
-  renderCourseTable = (course) => 
+  renderCourseBlock = (course) => 
       <div>
         <div className="course" key={course.courseId}>
           <h1>{course.name}</h1>
@@ -159,7 +159,8 @@ export default class Courses extends Component {
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <p>{course.description}</p>
+                <p><strong>Description:</strong> {course.description}</p>
+                <p><strong>Duration:</strong> {course.duration}</p>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
@@ -227,7 +228,7 @@ export default class Courses extends Component {
 
 
   render = () => {
-    let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseTable(course))) : <div>Loading...</div>;
+    let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseBlock(course))) : <div>Loading...</div>;
     return (
       <div>
         <h1>Courses</h1>
@@ -235,9 +236,9 @@ export default class Courses extends Component {
         <div className="dasha-flex">
           {cards}
         </div>
-        <p>There're {Math.floor(Math.random() * 10)} courses here</p>
+        {/* <p>There're {Math.floor(Math.random() * 10)} courses here</p>
         <p>There're {Math.floor(Math.random() * 40)} materials here</p>
-        <p>There're {Math.floor(Math.random() * 100)} tasks here</p>
+        <p>There're {Math.floor(Math.random() * 100)} tasks here</p> */}
         {/* <Button bsStyle="link" onClick={() => this.handleAdd}>Add new course</Button> */}
 
         <ButtonToolbar>
