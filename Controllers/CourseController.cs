@@ -28,7 +28,7 @@ namespace Education.Controllers
             //IEnumerable<Course> list = courseRepositoryImplgetAllCourses();
             return Ok(new
             {
-                courses = courseRepositoryImpl.getAllCourses()
+                courses = courseRepositoryImpl.getAll()
             });
         }
 
@@ -43,7 +43,7 @@ namespace Education.Controllers
         [Route("api/course/details/{id}")]
         public Course details(int id)
         {
-            return courseRepositoryImpl.GetCourse(id);
+            return courseRepositoryImpl.Get(id);
         }
 
         [HttpPut]
@@ -64,7 +64,7 @@ namespace Education.Controllers
         [Route("api/course/getcourselist")]
         public IEnumerable<Course> Details()
         {
-            return courseRepositoryImpl.getAllCourses();
+            return courseRepositoryImpl.getAll();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Education.Controllers
         [Route("api/user/getall")]
         public ActionResult GetAll() {
             return Ok(new {
-                users = userRepositoryImpl.getAllUsers()
+                users = userRepositoryImpl.getAll()
             });
         }
 
@@ -35,12 +35,12 @@ namespace Education.Controllers
         [HttpGet]
         [Route("api/user/details/{id}")]
         public User details(int id) {
-            return userRepositoryImpl.GetUser(id);
+            return userRepositoryImpl.Get(id);
         }
 
         [HttpPut]
-        [Route("api/user/edit")]
-        public int Edit(User user) {
+        [Route("api/user/edit/{id}")]
+        public User Edit([FromBody]User user) {
             return userRepositoryImpl.Update(user);
         }
 
