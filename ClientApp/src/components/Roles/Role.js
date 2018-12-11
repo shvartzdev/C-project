@@ -6,7 +6,7 @@ import {
   InputGroup,
   FormControl
 } from "react-bootstrap";
-
+import AddRoleModal from './AddRoleModal';
 
 export default class Roles extends Component {
   constructor(props, context) {
@@ -26,6 +26,7 @@ export default class Roles extends Component {
   }
 
  
+
 
   handleFormChange = (value, field) => {
     //console.log("onChange", value, field)
@@ -82,7 +83,10 @@ render = () => {
       <h1>Roles</h1>
       <p>Here you can see Roles</p>
       {cards}
-      <Button>Add new role</Button>
+     <AddRoleModal>
+       show = {this.state.showCreationModal}
+       role = {this.state.role}
+     </AddRoleModal>
     </div>
   )
 }
