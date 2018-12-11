@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-
+import AddUserModal from '../Users/AddUserModal';
 import {
-  Button
+  Button, Table
   // Badge,
   // FormGroup,
   // InputGroup,
@@ -13,10 +13,20 @@ import {
 export default class Users extends Component {
   displayName = Users.name;
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleDelete = this.handleDelete.bind(this);
+
     this.state = {
-      users: null
+      users: null,
+      user: {
+        Name: "",
+        Surname: "",
+        Email: "",
+        RoleID: ""
+      },
+      showCreationModal: false
     };
   }
 
@@ -29,15 +39,69 @@ export default class Users extends Component {
   }
 
 
+  handleUpdate = (userId) => {
+    let userDTO = this.state.user;
+    userDTO = { ...userDTO, userId: userId };
+    fetch("api/user/edit/" + userId, {
+      method: "put",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userDTO)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ users: data.users });
+      })
+  }
+
+  handleDelete = (userId) => {
+    console.log("id", userId);
+    if (!window.confirm("Are you sure you want to delete the user?")) return;
+    fetch("api/user/delete/" + userId, { method: "delete" })
+      .then(responce => responce.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ users: data.users })
+      })
+  }
+
   renderUserTable = (user) => {
     return (
-      <div className="users" key={user.id}>
-        <p>Name: {user.name}</p>
-        <p>Surname: {user.surname}</p>
-        <p>Email: {user.email}</p>
-        <Button>Edit</Button>
-        <Button>Delete</Button>
-      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <td>Surname</td>
+            <th>E-mail</th>
+            <th>RoleId</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr key={user.id}>
+            <td>{user.name}</td>
+            <td>{user.surname}</td>
+            <td>{user.email}</td>
+            <td>{user.RoleID}</td>
+            <td>
+              <Button bsStyle="link">
+                Edit
+                </Button>
+              <Button 
+                bsStyle="link"
+                onClick={() => this.handleDelete(user.userID)}
+              >
+              {console.log("id ",user.userID)}
+                Delete
+                </Button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     );
   }
 
@@ -48,7 +112,12 @@ export default class Users extends Component {
         <h1>Users</h1>
         <p>Here you can see your Users in this semester</p>
         {cards}
-        <Button>Add new user</Button>
+        <br />
+        <AddUserModal
+          show = {this.state.showCreationModal}
+          user = {this.state.user}
+        />
+        
       </div>
     );
   }
