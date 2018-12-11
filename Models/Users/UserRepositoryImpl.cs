@@ -19,13 +19,13 @@ namespace Education.Models.Users
             this.db = context;
         }
 
-        public int Create(User user)
+        public User Create(User user)
         {
             try
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return 1;
+                return user;
             }
             catch
             {

@@ -12,7 +12,7 @@ namespace Education.Models.Users
     public interface UserRepository : IDisposable {
         List<User> getAllUsers();
         User GetUser(int id);
-        int Create(User user);
+        User Create(User user);
         int Update(User user);
         int Delete(int id);
     }
