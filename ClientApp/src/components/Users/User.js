@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import AddUserModal from '../Users/AddUserModal';
+//import UpdateUserModel from '../Users/UpdateUserModal';
 import {
-  Button, Table
-  // Badge,
-  // FormGroup,
-  // InputGroup,
-  // FormControl
+  Button, Table,
+  Badge, ButtonToolbar, Modal,Form, ControlLabel,
+  FormGroup,
+  InputGroup,
+  FormControl
 } from "react-bootstrap";
 
 //import './styles.css';
@@ -17,6 +18,9 @@ export default class Users extends Component {
     super(props, context);
 
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.toggleUpdationModel = this.toggleUpdationModel.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
 
     this.state = {
       users: null,
@@ -26,8 +30,22 @@ export default class Users extends Component {
         Email: "",
         RoleID: ""
       },
-      showCreationModal: false
+      showCreationModal: false,
+      showUpdationModal: false
     };
+  }
+
+
+  
+  handleFormChange = (value, field) => {
+    //console.log("onChange", value, field)
+    this.setState(prevState => ({
+      user: {
+        ...prevState.user,
+        [field]: value
+      }
+    }));
+    console.log("state.user",this.state.user);
   }
 
   componentDidMount = () => {
@@ -39,7 +57,25 @@ export default class Users extends Component {
   }
 
 
+  toggleUpdationModel() {
+    const {showUpdationModal} = this.state;
+    this.setState({showUpdationModal: !showUpdationModal})
+}
+
+
+  handleDelete = (userId) => {
+    console.log("id", userId);
+    if (!window.confirm("Are you sure you want to delete the user?")) return;
+    fetch("api/user/delete/" + userId, { method: "delete" })
+      .then(responce => responce.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ users: data.users })
+      })
+  }
+
   handleUpdate = (userId) => {
+    console.log("from handleUpdate", userId);
     let userDTO = this.state.user;
     userDTO = { ...userDTO, userId: userId };
     fetch("api/user/edit/" + userId, {
@@ -57,17 +93,6 @@ export default class Users extends Component {
       })
   }
 
-  handleDelete = (userId) => {
-    console.log("id", userId);
-    if (!window.confirm("Are you sure you want to delete the user?")) return;
-    fetch("api/user/delete/" + userId, { method: "delete" })
-      .then(responce => responce.json())
-      .then(data => {
-        console.log(data);
-        this.setState({ users: data.users })
-      })
-  }
-
   renderUserTable = (user) => {
     return (
       <table className="table">
@@ -82,22 +107,74 @@ export default class Users extends Component {
         </thead>
         <tbody>
 
-          <tr key={user.id}>
+          <tr key={user.userID}>
             <td>{user.name}</td>
             <td>{user.surname}</td>
             <td>{user.email}</td>
-            <td>{user.RoleID}</td>
+            <td>{user.roleID}</td>
             <td>
-              <Button bsStyle="link">
-                Edit
-                </Button>
-              <Button 
-                bsStyle="link"
-                onClick={() => this.handleDelete(user.userID)}
-              >
-              {console.log("id ",user.userID)}
-                Delete
-                </Button>
+            
+            <Button onClick={() => this.setState({ showUpdationModal: user.userID })}>Edit</Button>
+                <Modal
+                    show={this.state.showUpdationModal === user.userID}                    
+                    onHide={this.toggleUpdationModel}
+                    dialogClassName="custom-modal">
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-lg">
+                            User updation
+                            {console.log("call ", user.userID)}
+                </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {"  "}
+                        <Form inline>
+                            <FormGroup>
+                                <ControlLabel>Name</ControlLabel>{" "}
+                                <FormControl
+                                    type="text"
+                                    placeholder={user.name}
+                                    onChange={event => this.handleFormChange(event.target.value, "Name")}
+                                   
+                                />{" "}
+                                 
+                            </FormGroup>{" "}
+                            <FormGroup>
+                                <ControlLabel>Surname</ControlLabel>{" "}
+                                <FormControl
+                                    type="text"
+                                    placeholder={user.surname}
+                                    onChange={event => this.handleFormChange(event.target.value, "Surname")}
+                                     />
+                                    
+                            </FormGroup>{" "}
+                            <FormGroup>
+                                <ControlLabel>Email</ControlLabel>{" "}
+                                <FormControl
+                                    type="text"
+                                    placeholder={user.email}
+                                    onChange={event => this.handleFormChange(event.target.value, "Email")}
+                                />{" "}
+                            </FormGroup>{" "}
+                            <FormGroup>
+                                <ControlLabel>RoleId</ControlLabel>
+                                <FormControl
+                                type="text"
+                                placeholder={user.roleID}
+                                onChange={event => this.handleFormChange(event.target.value, "RoleID")}
+                                />{" "}
+                            </FormGroup>
+                            
+                        </Form>
+                        <br />
+                        <Button onClick={() => this.handleUpdate(user.userID)} >Save changes</Button>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.toggleUpdationModel}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+                
+              <Button bsStyle="link" onClick={() => this.handleDelete(user.userID)}>Delete</Button>
             </td>
           </tr>
         </tbody>
