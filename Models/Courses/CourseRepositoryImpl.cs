@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Education.Models.Courses
 {
-    public class CourseRepositoryImpl : CourseRepository
+    public class CourseRepositoryImpl : Crud<Course>
     {
         private EducationContext db;
 
@@ -21,7 +21,7 @@ namespace Education.Models.Courses
             this.db = context;
         }
 
-        public List<Course> getAllCourses()
+        public List<Course> getAll()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Education.Models.Courses
 
        
 
-        public Course GetCourse(int id)
+        public Course Get(int id)
         {
             return db.Courses.Find(id);
         }

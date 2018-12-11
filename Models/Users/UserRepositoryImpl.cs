@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Education.Models.Users
 {
-    public class UserRepositoryImpl : UserRepository
+    public class UserRepositoryImpl : Crud<User>
     {
         private EducationContext db;
 
@@ -65,7 +65,7 @@ namespace Education.Models.Users
             GC.SuppressFinalize(this);
         }
 
-        public List<User> getAllUsers()
+        public List<User> getAll()
         {
             try
             {
@@ -77,16 +77,18 @@ namespace Education.Models.Users
             }
         }
 
-        public User GetUser(int id)
+        public User Get(int id)
         {
             return db.Users.Find(id);
         }
 
-        public int Update(User user)
+        public User Update(User user)
         {
            try {
+               if (user != null)
+               db.Entry(user).State=EntityState.Modified;
                db.SaveChanges();
-               return 1;
+               return user;
            } catch {
                throw;
            }
