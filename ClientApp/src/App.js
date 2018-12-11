@@ -6,6 +6,7 @@ import Home from './components/Home';
 import FetchData from './components/FetchData';
 import User from './components/Users/User';
 import Course from './components/Courses/Course';
+import Role from './components/Roles/Role';
 
 export default () => (
   <Layout>
@@ -13,6 +14,6 @@ export default () => (
     <Route path='/users' component={User}/>
     <Route path='/courses' component={Course} />
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-    
+    <Route path='/roles' component={Role}/>
   </Layout>
 );

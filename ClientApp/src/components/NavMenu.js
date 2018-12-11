@@ -38,6 +38,12 @@ export default props => (
         </NavItem>
         </LinkContainer>
         
+        <LinkContainer to={'/roles'}>
+          <NavItem>
+            <Glyphicon glyph='th-list'/> Roles
+          </NavItem>
+        </LinkContainer>
+
         {/* <LinkContainer to={'/counter'}>
           <NavItem>
             <Glyphicon glyph='education' /> Counter
