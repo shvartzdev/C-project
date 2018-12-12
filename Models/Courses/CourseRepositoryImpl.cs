@@ -25,7 +25,7 @@ namespace Education.Models.Courses
         {
             try
             {
-                return db.Courses.ToList();
+                return db.Courses.Include(c => c.Themes).ThenInclude(t => t.Tasks).ToList();
             } catch
             {
                 throw new NullReferenceException();
