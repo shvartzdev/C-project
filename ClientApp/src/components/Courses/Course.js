@@ -8,7 +8,8 @@ import {
 } from "react-bootstrap";
 
 import './styles.css';
-
+import Themes from './Themes';
+import Tasks from './Tasks';
 export default class Courses extends Component {
   displayName = Courses.name;
 
@@ -74,8 +75,8 @@ export default class Courses extends Component {
   }
 
   toggleUpdateModal() {
-    const {showUpdationModal} = this.state;
-    this.setState({ showUpdationModal: !showUpdationModal})
+    const { showUpdationModal } = this.state;
+    this.setState({ showUpdationModal: !showUpdationModal })
   }
 
   handleAdd = () => {
@@ -96,8 +97,8 @@ export default class Courses extends Component {
 
   handleUpdate = (courseId) => {
     let courseDTO = this.state.course;
-    courseDTO = {...courseDTO, CourseId: courseId};
-    fetch("api/course/edit/" + courseId,{
+    courseDTO = { ...courseDTO, CourseId: courseId };
+    fetch("api/course/edit/" + courseId, {
       method: "put",
       headers: {
         Accept: "application/json",
@@ -105,11 +106,11 @@ export default class Courses extends Component {
       },
       body: JSON.stringify(courseDTO)
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      this.setState({courses: data.courses});
-    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ courses: data.courses });
+      })
   }
 
   handleDelete = (courseId) => {
@@ -134,8 +135,18 @@ export default class Courses extends Component {
     console.log(this.state.course);
   }
 
+  getTasks = (themes) => {
+    console.log("from get", themes);
+    return <div>{themes.map(theme => 
+    <Tasks data={theme.tasks}></Tasks>
+    )}</div>
+  }
 
-  renderCourseBlock = (course) => 
+
+  renderCourseBlock = (course) => {
+    console.log(course.themes);
+    let mTasks = course ? this.getTasks(course.themes) : <div>Loading fucking tasks</div>;
+    return (
       <div>
         <div className="course" key={course.courseId}>
           <h1>{course.name}</h1>
@@ -161,6 +172,14 @@ export default class Courses extends Component {
               <Modal.Body>
                 <p><strong>Description:</strong> {course.description}</p>
                 <p><strong>Duration:</strong> {course.duration}</p>
+                <p><strong>Themes</strong></p>
+                <Themes data={course.themes}></Themes>
+                <p><strong>Tasks</strong></p>
+
+
+                <div className="task" key={course.themes}>
+                  {mTasks}
+                </div>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
@@ -169,9 +188,9 @@ export default class Courses extends Component {
 
 
             <Button onClick={() => this.setState({ showUpdationModal: course.courseId })}>Edit</Button>
-            
+
             <Modal
-            
+
               show={this.state.showUpdationModal === course.courseId}
               onHide={this.handleHideUpdateModel}
               dialogClassName="custom-modal">
@@ -225,11 +244,12 @@ export default class Courses extends Component {
 
         </div>
       </div>
+    )
+  }
 
 
   render = () => {
-    let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseBlock(course))) : <div>Loading...</div>;
-    return (
+    let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseBlock(course))) : <div>Loading...</div>; return (
       <div>
         <h1>Courses</h1>
         <p>Here you can see your courses in this semester</p>
