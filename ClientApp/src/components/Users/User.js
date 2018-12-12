@@ -106,77 +106,75 @@ export default class Users extends Component {
           </tr>
         </thead>
         <tbody>
-
           <tr key={user.userID}>
-            <td>{user.name}</td>
-            <td>{user.surname}</td>
-            <td>{user.email}</td>
-            <td>{user.roleID}</td>
-            <td>
-            
-            <Button onClick={() => this.setState({ showUpdationModal: user.userID })}>Edit</Button>
-                <Modal
-                    show={this.state.showUpdationModal === user.userID}                    
-                    onHide={this.toggleUpdationModel}
-                    dialogClassName="custom-modal">
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-lg">
-                            User updation
-                            {console.log("call ", user.userID)}
-                </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        {"  "}
-                        <Form inline>
-                            <FormGroup>
-                                <ControlLabel>Name</ControlLabel>{" "}
-                                <FormControl
-                                    type="text"
-                                    placeholder={user.name}
-                                    onChange={event => this.handleFormChange(event.target.value, "Name")}
-                                   
-                                />{" "}
-                                 
-                            </FormGroup>{" "}
-                            <FormGroup>
-                                <ControlLabel>Surname</ControlLabel>{" "}
-                                <FormControl
-                                    type="text"
-                                    placeholder={user.surname}
-                                    onChange={event => this.handleFormChange(event.target.value, "Surname")}
-                                     />
+              <td>{user.name}</td>
+              <td>{user.surname}</td>
+              <td>{user.email}</td>
+              <td>{user.roleID}</td>
+              <td>
+              <Button onClick={() => this.setState({ showUpdationModal: user.userID })}>Edit</Button>
+                  <Modal
+                      show={this.state.showUpdationModal === user.userID}                    
+                      onHide={this.toggleUpdationModel}
+                      dialogClassName="custom-modal">
+                      <Modal.Header closeButton>
+                          <Modal.Title id="contained-modal-title-lg">
+                              User updation
+                              {console.log("call ", user.userID)}
+                  </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                          {"  "}
+                          <Form inline>
+                              <FormGroup>
+                                  <ControlLabel>Name</ControlLabel>{" "}
+                                  <FormControl
+                                      type="text"
+                                      placeholder={user.name}
+                                      onChange={event => this.handleFormChange(event.target.value, "Name")}
                                     
-                            </FormGroup>{" "}
-                            <FormGroup>
-                                <ControlLabel>Email</ControlLabel>{" "}
-                                <FormControl
-                                    type="text"
-                                    placeholder={user.email}
-                                    onChange={event => this.handleFormChange(event.target.value, "Email")}
-                                />{" "}
-                            </FormGroup>{" "}
-                            <FormGroup>
-                                <ControlLabel>RoleId</ControlLabel>
-                                <FormControl
-                                type="text"
-                                placeholder={user.roleID}
-                                onChange={event => this.handleFormChange(event.target.value, "RoleID")}
-                                />{" "}
-                            </FormGroup>
-                            
-                        </Form>
-                        <br />
-                        <Button onClick={() => this.handleUpdate(user.userID)} >Save changes</Button>
+                                  />{" "}
+                                  
+                              </FormGroup>{" "}
+                              <FormGroup>
+                                  <ControlLabel>Surname</ControlLabel>{" "}
+                                  <FormControl
+                                      type="text"
+                                      placeholder={user.surname}
+                                      onChange={event => this.handleFormChange(event.target.value, "Surname")}
+                                      />
+                                      
+                              </FormGroup>{" "}
+                              <FormGroup>
+                                  <ControlLabel>Email</ControlLabel>{" "}
+                                  <FormControl
+                                      type="text"
+                                      placeholder={user.email}
+                                      onChange={event => this.handleFormChange(event.target.value, "Email")}
+                                  />{" "}
+                              </FormGroup>{" "}
+                              <FormGroup>
+                                  <ControlLabel>RoleId</ControlLabel>
+                                  <FormControl
+                                  type="text"
+                                  placeholder={user.roleID}
+                                  onChange={event => this.handleFormChange(event.target.value, "RoleID")}
+                                  />{" "}
+                              </FormGroup>
+                              
+                          </Form>
+                          <br />
+                          <Button onClick={() => this.handleUpdate(user.userID)} >Save changes</Button>
 
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.toggleUpdationModel}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-                
-              <Button bsStyle="link" onClick={() => this.handleDelete(user.userID)}>Delete</Button>
-            </td>
-          </tr>
+                      </Modal.Body>
+                      <Modal.Footer>
+                          <Button onClick={this.toggleUpdationModel}>Close</Button>
+                      </Modal.Footer>
+                  </Modal>
+                  
+                <Button bsStyle="link" onClick={() => this.handleDelete(user.userID)}>Delete</Button>
+              </td>
+            </tr>
         </tbody>
       </table>
     );
