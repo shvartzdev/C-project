@@ -36,7 +36,11 @@ export default props => (
           </NavItem>
         </LinkContainer>
 
-       
+        <LinkContainer to={'/signin'} exact>
+          <NavItem>
+            <Glyphicon glyph='th-list'></Glyphicon> Sign In
+          </NavItem>
+        </LinkContainer>}
 
         {/* <LinkContainer to={'/fetchdata'}>
         <NavItem>

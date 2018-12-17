@@ -8,7 +8,7 @@ import User from './components/Users/User';
 import Course from './components/Courses/Course';
 import Role from './components/Roles/Role';
 import Task from './components/Courses/Task';
-import Coursetest from './components/Courses/Coursetest';
+import SignIn from './components/Login/SignIn';
 import Themes from './components/Courses/Themes';
 
 
@@ -17,9 +17,9 @@ export default () => (
     <Route exact path='/tasks' component={Task} />
     <Route path='/users' component={User}/>
     <Route path='/courses' component={Course} />
-    <Route path='/coursestest' component={Coursetest}/>
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
     <Route path='/roles' component={Role}/>
     <Route path='/themes' component={Themes}/>
+    <Route path='/signin' component={SignIn}/>
   </Layout>
 );
