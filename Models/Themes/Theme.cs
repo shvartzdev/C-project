@@ -7,7 +7,8 @@ namespace Education.Models
     {
         public int ThemeID {get; set;}
         public string ThemeName {get;set;}
-         public ICollection<Task> Tasks { get; set; }
+        public int CourseId{get;set;}
+         //public ICollection<Task> Tasks { get; set; }
         
     }
 }

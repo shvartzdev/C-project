@@ -56,8 +56,8 @@ namespace Education.Models.Themes
         public List<Theme> getAll()
         {
             try {
-                return db.Themes.Include(c => c.Tasks).ToList();
-                //return db.Themes.ToList();
+                //return db.Themes.Include(c => c.Tasks).ToList();
+                return db.Themes.ToList();
             } catch {
                 throw new NotImplementedException();
             }
