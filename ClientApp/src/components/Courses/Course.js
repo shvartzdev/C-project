@@ -8,8 +8,6 @@ import {
 } from "react-bootstrap";
 
 import './styles.css';
-import Themes from './Themes';
-import Tasks from './Tasks';
 export default class Courses extends Component {
   displayName = Courses.name;
 
@@ -28,6 +26,11 @@ export default class Courses extends Component {
 
     this.state = {
       courses: null,
+      themes: null,
+      theme: {
+        ThemeName: "",
+        CourseId: ""
+      },
       course: {
         Name: "",
         Duration: "",
@@ -46,6 +49,13 @@ export default class Courses extends Component {
         console.log(data);
         this.setState({ courses: data.courses });
       });
+
+    fetch("api/theme/getall", {dataType: 'json'})
+    .then(response => response.json())
+    .then(data => {
+      console.log("themes", data);
+      this.setState({themes: data.themes});
+    })  
   }
 
   handleShow() {
@@ -135,34 +145,32 @@ export default class Courses extends Component {
     console.log(this.state.course);
   }
 
-  getTasks = (themes) => {
-    console.log("from get", themes);
-    return <div>{themes.map(theme => 
-    <Tasks data={theme.tasks}></Tasks>
-    )}</div>
-  }
+  // getTasks = (themes) => {
+  //   console.log("from get", themes);
+  //   // return <div>{themes.map(theme => 
+  //   // <Tasks data={theme.tasks}></Tasks>
+  //   )}</div>
+  // }
 
 
   renderCourseBlock = (course) => {
-    console.log(course.themes);
-    let mTasks = course ? this.getTasks(course.themes) : <div>Loading fucking tasks</div>;
+    //let mTasks = course ? this.getTasks(course.themes) : <div>Loading fucking tasks</div>;
+    let themes = this.state.themes ? (this.state.themes.map(theme => this.renderThemeBlock(theme))) : <div>Loading themes...</div>
     return (
-      <div>
+      
         <div className="course" key={course.courseId}>
           <h1>{course.name}</h1>
           <p><strong>Duration:</strong> {course.duration}</p>
+          <div className="description">
           <p><strong>Description:</strong> {course.description}</p>
-
+            </div>
           <ButtonToolbar>
             <Button bsStyle="primary" onClick={() => this.setState({ show: course.courseId })}>
-              Show more
+              More
             </Button>
             <Modal
-              //{...this.props}
               show={this.state.show === course.courseId}
               onHide={this.handleHide}
-              // container={this}
-              // aria-labelleby="contained-modal-title"
               dialogClassName="custom-modal">
               <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-lg">
@@ -173,13 +181,14 @@ export default class Courses extends Component {
                 <p><strong>Description:</strong> {course.description}</p>
                 <p><strong>Duration:</strong> {course.duration}</p>
                 <p><strong>Themes</strong></p>
-                <Themes data={course.themes}></Themes>
+                {/* <Themes data={course.themes}></Themes> */}
+                <p>{course.courseId}</p>
+                {/* <Link to={`tasks`}>something</Link> */}
+
+                {themes}
+                
                 <p><strong>Tasks</strong></p>
-
-
-                <div className="task" key={course.themes}>
-                  {mTasks}
-                </div>
+                
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={this.handleHide}>Close</Button>
@@ -187,7 +196,7 @@ export default class Courses extends Component {
             </Modal>
 
 
-            <Button onClick={() => this.setState({ showUpdationModal: course.courseId })}>Edit</Button>
+            <Button bsStyle="default" onClick={() => this.setState({ showUpdationModal: course.courseId })}>Edit</Button>
 
             <Modal
 
@@ -201,9 +210,10 @@ export default class Courses extends Component {
               </Modal.Header>
               <Modal.Body>
                 {"  "}
-                <Form inline>
+                <Form>
                   <FormGroup>
-                    <ControlLabel>Name</ControlLabel>{" "}
+                    <ControlLabel>{course.name}</ControlLabel>{" "}
+                    
                     <FormControl
                       type="text"
                       placeholder={course.name}
@@ -211,7 +221,7 @@ export default class Courses extends Component {
                     />{" "}
                   </FormGroup>{" "}
                   <FormGroup>
-                    <ControlLabel>Duration</ControlLabel>{" "}
+                    <ControlLabel>{course.duration}</ControlLabel>{" "}
                     <FormControl
                       type="text"
                       placeholder={course.duration}
@@ -219,7 +229,7 @@ export default class Courses extends Component {
                     />{" "}
                   </FormGroup>{" "}
                   <FormGroup>
-                    <ControlLabel>Description</ControlLabel>{" "}
+                    <ControlLabel>{course.description}</ControlLabel>{" "}
                     <FormControl
                       type="text"
                       placeholder={course.description}
@@ -232,29 +242,44 @@ export default class Courses extends Component {
                 <br />
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={() => this.handleHideUpdateModel()}>Close</Button>
+                <Button
+                 onClick={() => this.handleHideUpdateModel()}>Close</Button>
               </Modal.Footer>
             </Modal>
 
-
-            <Button onClick={() => this.handleDelete(course.courseId)}>Delete</Button>
+            <Button 
+            
+            bsStyle="default" onClick={() => this.handleDelete(course.courseId)}>Delete</Button>
 
           </ButtonToolbar>
 
 
         </div>
-      </div>
+     
+    )
+  }
+  
+  renderThemeBlock = (theme) => {
+    console.log("themeName", theme.themeID);
+    return (
+   <div key={theme.themeID}>
+   
+    <p>CourseId:{theme.courseId}</p>
+    <p>{theme.themeID}</p>
+    <p>{theme.themeName}</p>
+   </div>
     )
   }
 
-
   render = () => {
-    let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseBlock(course))) : <div>Loading...</div>; return (
+    let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseBlock(course))) : <div>Loading courses...</div>; 
+    return (
       <div>
         <h1>Courses</h1>
         <p>Here you can see your courses in this semester</p>
-        <div className="dasha-flex">
+        <div className="course-flex">
           {cards}
+         
         </div>
         {/* <p>There're {Math.floor(Math.random() * 10)} courses here</p>
         <p>There're {Math.floor(Math.random() * 40)} materials here</p>

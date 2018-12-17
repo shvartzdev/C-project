@@ -1,14 +1,26 @@
 .course {
-    display: inline-block;
-    border: 1px solid #eee;
-    box-shadow: 0 2px 2px #ccc;
-    width:250px;
-    padding:20px;
-    margin: 10px 20px 10px 10px;
-    border-radius: 10px;
-  }
+  display: inline-block;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 2px #ccc;
+  width:250px;
+  padding:20px;
+  margin: 10px 20px 10px 10px;
+  border-radius: 10px;
+}
+.course:hover {
+box-shadow: 0 4px 4px rgb(175, 173, 173);
+}
+.course-flex {
+display: flex;
+flex-wrap: wrap;
+}
 
-.dasha-flex {
-  display: flex;
-  flex-wrap: wrap;
+.course-large {
+display: inline-block;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 2px #ccc;
+  width:300px;
+  padding:20px;
+  margin: 10px 20px 10px 10px;
+  border-radius: 10px;
 }
