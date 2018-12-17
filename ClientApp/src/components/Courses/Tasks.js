@@ -31,7 +31,7 @@ export default class Tasks extends Component {
     renderTaskList = (task) => 
         <div>
             <div key={task.taskID}>
-                <p><strong>Number:</strong>{task.taskId}
+                <p>
                 <strong>  Question:</strong> {task.taskQuestion}</p>
             </div>
         </div>
@@ -41,7 +41,7 @@ export default class Tasks extends Component {
         let tasks = this.state.tasks ? (this.state.tasks.map(task => this.renderTaskList(task))) : <div>Loading...</div>;
         return (
             <div>
-            {/* <p>Tasks should be here</p> */}
+             {/* <p><strong>Tasks</strong></p> */}
                 {tasks}
             </div>
         )
