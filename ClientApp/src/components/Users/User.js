@@ -93,7 +93,7 @@ export default class Users extends Component {
       })
   }
 
-  renderUserTable = (user) => {
+  renderUserTable = users => {
     return (
       <table className="table">
         <thead>
@@ -106,7 +106,9 @@ export default class Users extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr key={user.userID}>
+
+        {users.map(user => (
+            <tr key={user.userID}>
               <td>{user.name}</td>
               <td>{user.surname}</td>
               <td>{user.email}</td>
@@ -175,18 +177,27 @@ export default class Users extends Component {
                 <Button bsStyle="link" onClick={() => this.handleDelete(user.userID)}>Delete</Button>
               </td>
             </tr>
+        ))}
         </tbody>
       </table>
     );
   }
 
   render = () => {
-    let cards = this.state.users ? (this.state.users.map(user => this.renderUserTable(user))) : <div>Loading...</div>;
+    let contents =
+    this.state.users ? (
+      this.renderUserTable(
+        this.state.users,
+      )
+    ) : (
+      <div>Loading...</div>
+    );
+
     return (
       <div>
         <h1>Users</h1>
         <p>Here you can see your Users in this semester</p>
-        {cards}
+        {contents}
         <br />
         <AddUserModal
           show = {this.state.showCreationModal}

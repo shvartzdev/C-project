@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Button, Table,
-  Badge, ButtonToolbar, Modal,Form, ControlLabel,
-  FormGroup,
-  InputGroup,
-  FormControl
+  Button
 } from "react-bootstrap";
 import AddRoleModal from './AddRoleModal';
 import UpdateRoleModal from './UpdateRoleModal';
@@ -71,8 +67,8 @@ renderRoleBlock = (role) => {
     <div>
       <div className="course" key={role.roleID}>
         <h1>{role.name}</h1>
-        <p><UpdateRoleModal role={this.state.role} roleID = {role.roleID}/></p>
-        <p><Button onClick={() => this.handleDelete(role.roleID)}>Delete</Button></p>
+        <p><UpdateRoleModal role={this.state.role} roleID = {role.roleID}/>
+        <Button bsStyle="default" onClick={() => this.handleDelete(role.roleID)}>Delete</Button></p>
       </div>
     </div>
   );
@@ -84,7 +80,9 @@ render = () => {
     <div>
       <h1>Roles</h1>
       <p>Here you can see Roles</p>
+      <div className="course-flex">
       {cards}
+      </div>
      <AddRoleModal>
        show = {this.state.showCreationModal}
        role = {this.state.role}

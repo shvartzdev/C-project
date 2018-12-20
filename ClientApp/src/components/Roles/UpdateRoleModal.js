@@ -66,7 +66,7 @@ export default class UpdateRoleModal extends Component {
     render = () => {
         return (
             <div>
-                <Button onClick={() => this.setState({showUpdationModal: this.props.roleID})}>Edit</Button>
+                <Button bsStyle="default" onClick={() => this.setState({showUpdationModal: this.props.roleID})}>Edit</Button>
 
                 <Modal
                     show={this.state.showUpdationModal === this.props.roleID}
