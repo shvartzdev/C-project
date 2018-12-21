@@ -16,55 +16,43 @@ export default props => (
       <Nav>
       <LinkContainer to={'/courses'}>
           <NavItem>
-            <Glyphicon glyph='education' /> My Courses
+            <Glyphicon glyph='education' /> Мои курсы
           </NavItem>
         </LinkContainer>
         <LinkContainer to={'/themes'}>
           <NavItem>
-            <Glyphicon glyph='education' /> Themes
+            <Glyphicon glyph='education' /> Темы
           </NavItem>
         </LinkContainer>
       <LinkContainer to={'/tasks'} exact>
           <NavItem>
-            <Glyphicon glyph='th-list' /> Tasks
+            <Glyphicon glyph='th-list' /> Задания
           </NavItem>
         </LinkContainer>
 
         <LinkContainer to={'/users'} exact>
           <NavItem>
-            <Glyphicon glyph='th-list' /> Users
+            <Glyphicon glyph='th-list' /> Пользователи
           </NavItem>
         </LinkContainer>
 
         <LinkContainer to={'/signin'} exact>
           <NavItem>
-            <Glyphicon glyph='th-list'></Glyphicon> Sign In
+            <Glyphicon glyph='th-list'></Glyphicon> Войти в систему
           </NavItem>
-        </LinkContainer>}
+        </LinkContainer>
 
-        {/* <LinkContainer to={'/fetchdata'}>
-        <NavItem>
-          <Glyphicon glyph='home'/>Profile
-        </NavItem>
-        </LinkContainer> */}
+        <LinkContainer to={'/login'} exact>
+          <NavItem>
+            <Glyphicon glyph='th-list'></Glyphicon> Регистрация
+          </NavItem>
+        </LinkContainer>
         
         <LinkContainer to={'/roles'}>
           <NavItem>
-            <Glyphicon glyph='th-list'/> Roles
+            <Glyphicon glyph='th-list'/> Роли
           </NavItem>
         </LinkContainer>
-
-        {/* <LinkContainer to={'/counter'}>
-          <NavItem>
-            <Glyphicon glyph='education' /> Counter
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/fetchdata'}>
-          <NavItem>
-            <Glyphicon glyph='th-list' /> Fetch data
-          </NavItem>
-        </LinkContainer> */}
-
       </Nav>
     </Navbar.Collapse>
   </Navbar>

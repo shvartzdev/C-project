@@ -10,7 +10,7 @@ import Role from './components/Roles/Role';
 import Task from './components/Courses/Task';
 import SignIn from './components/Login/SignIn';
 import Themes from './components/Courses/Themes';
-
+import SignUp from './components/Login/Signup';
 
 export default () => (
   <Layout>
@@ -21,5 +21,6 @@ export default () => (
     <Route path='/roles' component={Role}/>
     <Route path='/themes' component={Themes}/>
     <Route path='/signin' component={SignIn}/>
+    <Route path='/login' component={SignUp}/>
   </Layout>
 );

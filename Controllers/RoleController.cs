@@ -8,48 +8,67 @@ using Microsoft.AspNetCore.Mvc;
 using Education.Models;
 using Education.Models.Themes;
 using Education.Models.Roles;
+using Microsoft.AspNetCore.Identity;
 
 namespace Education.Controllers
 {
     public class RoleController : Controller
     {
-        private readonly EducationContext _context; 
-        private RoleRepositoryImpl roleRepositoryImpl;
-        public RoleController(EducationContext context) {
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly EducationContext _context;
+        public RoleController(EducationContext context, RoleManager<IdentityRole> roleManager) {
+            _roleManager = roleManager;
             _context = context;
-            roleRepositoryImpl = new RoleRepositoryImpl(_context);
         }
 
         [HttpGet]
-        [Route("api/role/getall")]
-        public ActionResult GetAll() {
-            return Ok(new {
-                roles = roleRepositoryImpl.getAll()
+        [Route("api/Role/GetRoles")]
+        public IActionResult GetRoles()
+        {
+            return Ok(new
+            {
+                roles = _roleManager.Roles.ToList()
             });
         }
 
         [HttpPost]
-        [Route("api/role/create")]
-        public Role create([FromBody]Role role) {
-            return roleRepositoryImpl.Create(role);
-        }
-
-         [HttpGet]
-        [Route("api/role/details/{id}")]
-        public Role details(int id) {
-            return roleRepositoryImpl.Get(id);
-        }
-
-         [HttpPut]
-        [Route("api/role/edit/{id}")]
-        public Role Edit([FromBody]Role role) {
-            return roleRepositoryImpl.Update(role);
+        [Route("api/Role/Create")]
+        public async Task<IActionResult> Create([FromBody] string roleName)
+        {
+            if (!string.IsNullOrEmpty(roleName))
+            {
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(roleName));
+                if (result.Succeeded)
+                {
+                    return Ok( new {
+                        roles = _roleManager.Roles.ToList()
+                    });
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            return Ok();
         }
 
         [HttpDelete]
-        [Route("api/role/delete/{id}")]
-        public int Delete(int id) {
-            return roleRepositoryImpl.Delete(id);
+        [Route("api/Role/Delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute]string id)
+        {
+            IdentityRole role = await _roleManager.FindByIdAsync(id);
+            if (role != null)
+            {
+                IdentityResult result = await _roleManager.DeleteAsync(role);
+            }
+            return Ok(new {
+                roles = _roleManager.Roles.ToList()
+            });
         }
+
+
     }
 }

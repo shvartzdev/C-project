@@ -8,6 +8,9 @@ namespace Education.Models {
         public string Email {get; set;}
         [Required]
         public int RoleID {get; set;}
+        [Required]
+        public int GroupID{get; set;}
+
         
     }
 }

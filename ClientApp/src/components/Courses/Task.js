@@ -77,9 +77,9 @@ export default class Task extends Component {
 
         return (
             <div className="course-large" key={task.taskId}>
-                <p><strong>ID </strong>{task.taskId} <strong>TaskQuestions </strong>{task.taskQuestion}</p>
+                <p><strong>Задание </strong>{task.taskQuestion}</p>
                 
-                <Button bsStyle="default" onClick={() => this.setState({showUpdationModal: task.taskId})}>Edit</Button>
+                <Button bsStyle="default" onClick={() => this.setState({showUpdationModal: task.taskId})}>Описание</Button>
                 {/* <Button bsStyle="primary">Answer</Button> */}
 
                 <Modal
@@ -89,7 +89,7 @@ export default class Task extends Component {
                     dialogClassName="custom-modal">
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-lg">
-                            Task Update
+                            Описание
           </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -97,26 +97,22 @@ export default class Task extends Component {
                         <Form>
                             <FormGroup>
                                 <ControlLabel>{task.taskQuestion}</ControlLabel>{" "}
-                                <FormControl
-                                    type="text"
-                                    placeholder={task.taskQuestion}
-                                    onChange={event => this.handleFormChange(event.target.value, "TaskQuestion")}
-                                />{" "}
+                                
                             </FormGroup>{" "}
 
                             <FormGroup>
-                                <ControlLabel>{task.themeId}</ControlLabel>{" "}
+                                <ControlLabel>Добавить ответ</ControlLabel>{" "}
 
                                 <FormControl
                                     type="text"
-                                    placeholder={task.themeId}
-                                    onChange={event => this.handleFormChange(event.target.value, "ThemeId")}
+                                    placeholder={task.taskAnswer}
+                                    onChange={event => this.handleFormChange(event.target.value, "TaskAnswer")}
                                 />{" "}
                             </FormGroup>{" "}
 
 
 
-                            <Button onClick={() => this.handleUpdate(task.taskId)}>Save Changes</Button>
+                            <Button onClick={() => this.handleUpdate(task.taskId)}>Сохранить</Button>
                         </Form>
                         <br />
                     </Modal.Body>
@@ -125,7 +121,7 @@ export default class Task extends Component {
                     </Modal.Footer>
                 </Modal>
 
-                <Button bsStyle="default" onClick={() => this.handleDelete(task.taskId)}>Delete</Button>
+                <Button bsStyle="default" onClick={() => this.handleDelete(task.taskId)}>Удалить</Button>
             </div>
         )
     }
@@ -183,7 +179,7 @@ export default class Task extends Component {
                     </div>
 
                 </div>
-                <Button bsStyle="primary" onClick={this.toggleCreationModel}>Add new task</Button>
+                <Button bsStyle="primary" onClick={this.toggleCreationModel}>Добавить новое задание</Button>
 
                 <Modal
                     show={this.state.showCreationModal}
@@ -196,7 +192,7 @@ export default class Task extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         {"  "}
-                        <Form inline>
+                        <Form >
                             <FormGroup>
                                 <ControlLabel>TaskQuestion</ControlLabel>{" "}
                                 <FormControl
@@ -215,14 +211,14 @@ export default class Task extends Component {
 
 
                             <Button onClick={this.handleAdd} >
-                                New theme
+                                Добавить
           </Button>
                         </Form>
                         <br />
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button onClick={this.toggleCreationModel}>Close</Button>
+                        <Button onClick={this.toggleCreationModel}>Закрыть</Button>
                     </Modal.Footer>
                 </Modal>
 

@@ -78,7 +78,7 @@ export default class Themes extends Component {
 
   handleDelete = (themeID) => {
     console.log("id", themeID);
-    if (!window.confirm("Are you sure you want to delete the theme?")) return;
+    if (!window.confirm("Вы уверены, что хотите удалить эту тему?")) return;
     fetch("api/theme/delete/" + themeID, { method: "delete" })
       .then(responce => responce.json())
       .then(data => {
@@ -111,11 +111,11 @@ export default class Themes extends Component {
   renderThemeBlock = (theme) => {
     return (
       <div className="course" key={theme.themeID}>
-        <p>ThemeID: {theme.themeID}</p>
-        <p>ThemeName: {theme.themeName}</p>
-        <p>CourseId:{theme.courseId}</p>
+        {/* <p>ThemeID: {theme.themeID}</p> */}
+        <p>Тема: {theme.themeName}</p>
+        {/* <p>CourseId:{theme.courseId}</p> */}
 
-        <Button bsStyle="default" onClick={() => this.setState({showUpdationModal: theme.themeID})}>Edit</Button>
+        <Button bsStyle="default" onClick={() => this.setState({showUpdationModal: theme.themeID})}>Изменить</Button>
 
         <Modal
 
@@ -124,7 +124,7 @@ export default class Themes extends Component {
           dialogClassName="custom-modal">
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-lg">
-              Theme Update
+              Редактирование темы
                     </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -139,7 +139,7 @@ export default class Themes extends Component {
                 />{" "}
               </FormGroup>{" "}
 
-              <FormGroup>
+              {/* <FormGroup>
                 <ControlLabel>{theme.cousreId}</ControlLabel>{" "}
 
                 <FormControl
@@ -147,22 +147,22 @@ export default class Themes extends Component {
                   placeholder={theme.courseId}
                   onChange={event => this.handleFormChange(event.target.value, "CourseId")}
                 />{" "}
-              </FormGroup>{" "}
+              </FormGroup>{" "} */}
 
               
 
-              <Button onClick={() => this.handleUpdate(theme.themeID)}>Save Changes</Button>
+              <Button onClick={() => this.handleUpdate(theme.themeID)}>Сохранить изменения</Button>
             </Form>
             <br />
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.toggleUpdationModel}>Close</Button>
+            <Button onClick={this.toggleUpdationModel}>Закрыть</Button>
           </Modal.Footer>
         </Modal>
 
 
 
-        <Button bsStyle="default" onClick={() => this.handleDelete(theme.themeID)}>Delete</Button>
+        <Button bsStyle="default" onClick={() => this.handleDelete(theme.themeID)}>Удалить</Button>
       </div>
     )
   }
@@ -177,7 +177,7 @@ export default class Themes extends Component {
           {themes}
           
         </div>
-        <Button bsStyle="primary" onClick={this.toggleCreationModel}>Add new theme</Button>
+        <Button bsStyle="primary" onClick={this.toggleCreationModel}>Добавить новую тему</Button>
 
           <Modal
           show={this.state.showCreationModal}
@@ -209,14 +209,14 @@ export default class Themes extends Component {
 
 
               <Button onClick={this.handleAdd} >
-                New theme
+                Новая тема
           </Button>
             </Form>
             <br />
 
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.toggleCreationModel}>Close</Button>
+            <Button onClick={this.toggleCreationModel}>Закрыть</Button>
           </Modal.Footer>
         </Modal>
 

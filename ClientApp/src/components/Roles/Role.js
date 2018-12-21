@@ -1,94 +1,112 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
-  Button
+  Button,
+  Badge,
+  FormGroup,
+  InputGroup,
+  FormControl
 } from "react-bootstrap";
-import AddRoleModal from './AddRoleModal';
-import UpdateRoleModal from './UpdateRoleModal';
 
-import '../Courses/styles.css';
 
-export default class Roles extends Component {
+export default class Role extends Component {
+  displayName = Role.name;
+
   constructor(props, context) {
-    super(props,context);
+    super(props, context);
 
-
-    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
 
     this.state = {
       roles: null,
-      role: {
-        "Name": ""
-      },
-      showCreationModal: false,
-      showUpdationModal: false
+      roleName: ""
     };
   }
 
-  handleDelete = (roleId) => {
-    console.log("id", roleId);
-    if (!window.confirm("Are you sure you want to delete the user?")) return;
-    fetch("api/role/delete/" + roleId, { method: "delete" })
-      .then(responce => responce.json())
+  componentDidMount = () => {
+    fetch("api/Role/GetRoles")
+      .then(response => response.json())
       .then(data => {
         console.log(data);
-        this.setState({ roles: data.roles })
-      })
-  }
- 
-
-
-  handleFormChange = (value, field) => {
-    //console.log("onChange", value, field)
-    this.setState(prevState => ({
-      role: {
-        ...prevState.role,
-        [field]: value
-      }
-    }));
-    console.log("state.role",this.state.role);
-  }
-
-  componentDidMount = () => {
-    fetch("api/role/getall", {dataType: 'json'})
-      .then(responce => responce.json())
-      .then(data => {
-        this.setState({roles : data.roles});
+        this.setState({ roles: data.roles });
       });
-  }
+  };
 
+  render = () => {
+    let contents = this.state.roles ? (
+      this.renderRolesTable(this.state.roles)
+    ) : (
+      <div >Loading...</div>
+    );
+    return <div>{contents}</div>;
+  };
 
-  toggleUpdationModel() {
-    const {showUpdationModal} = this.state;
-    this.setState({showUpdationModal: !showUpdationModal})
-}
+  handleDelete = id => {
+    if (!window.confirm("Are you sure you wish to delete this item?")) return;
+    fetch("api/Role/Delete/" + id, { method: "delete" })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({ roles: data.roles });
+      });
+  };
 
-renderRoleBlock = (role) => {
-  return (
-    <div>
-      <div className="course" key={role.roleID}>
-        <h1>{role.name}</h1>
-        <p><UpdateRoleModal role={this.state.role} roleID = {role.roleID}/>
-        <Button bsStyle="default" onClick={() => this.handleDelete(role.roleID)}>Delete</Button></p>
+  handleAdd = () => {
+    fetch("api/Role/Create", {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state.roleName)})
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          this.setState({ roles: data.roles });
+        })
+    };
+
+  renderRolesTable = roles => {
+    return (
+      <div>
+        <h1>Справочник ролей</h1>
+        <FormGroup>
+          <InputGroup>
+            <FormControl
+              type="text"
+              onChange={event =>
+                this.setState({ roleName: event.target.value })
+              }
+            />
+            <InputGroup.Button>
+              <Button onClick={this.handleAdd}>Добавить роль</Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {roles.map(role => (
+              <tr key={role.id}>
+                <td>{role.name}</td>
+                <td>
+                  <Button
+                    bsStyle="link"
+                    onClick={() => this.handleDelete(role.id)}
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
-  );
-}
-
-render = () => {
-  let cards = this.state.roles ? (this.state.roles.map(role => this.renderRoleBlock(role))) : <div>Loading</div>;
-  return (
-    <div>
-      <h1>Roles</h1>
-      <p>Here you can see Roles</p>
-      <div className="course-flex">
-      {cards}
-      </div>
-     <AddRoleModal>
-       show = {this.state.showCreationModal}
-       role = {this.state.role}
-     </AddRoleModal>
-    </div>
-  )
-}
-
+    );
+  };
 }

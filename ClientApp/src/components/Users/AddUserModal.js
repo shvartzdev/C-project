@@ -83,7 +83,7 @@ export  default class AddUserModal extends Component {
                     </Modal.Header>
                     <Modal.Body>
                         {"  "}
-                        <Form inline>
+                        <Form >
                             <FormGroup>
                                 <ControlLabel>Name</ControlLabel>{" "}
                                 <FormControl

@@ -145,28 +145,21 @@ export default class Courses extends Component {
     console.log(this.state.course);
   }
 
-  // getTasks = (themes) => {
-  //   console.log("from get", themes);
-  //   // return <div>{themes.map(theme => 
-  //   // <Tasks data={theme.tasks}></Tasks>
-  //   )}</div>
-  // }
-
+  
 
   renderCourseBlock = (course) => {
-    //let mTasks = course ? this.getTasks(course.themes) : <div>Loading fucking tasks</div>;
     let themes = this.state.themes ? (this.state.themes.map(theme => this.renderThemeBlock(theme))) : <div>Loading themes...</div>
     return (
       
         <div className="course" key={course.courseId}>
           <h1>{course.name}</h1>
-          <p><strong>Duration:</strong> {course.duration}</p>
+          <p><strong>Длительность:</strong> {course.duration}</p>
           <div className="description">
-          <p><strong>Description:</strong> {course.description}</p>
+          {/* <p><strong>Description:</strong> {course.description}</p> */}
             </div>
           <ButtonToolbar>
             <Button bsStyle="primary" onClick={() => this.setState({ show: course.courseId })}>
-              More
+              Подробнее
             </Button>
             <Modal
               show={this.state.show === course.courseId}
@@ -178,16 +171,16 @@ export default class Courses extends Component {
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <p><strong>Description:</strong> {course.description}</p>
-                <p><strong>Duration:</strong> {course.duration}</p>
-                <p><strong>Themes</strong></p>
+                <p><strong>Описание:</strong> {course.description}</p>
+                <p><strong>Длительность:</strong> {course.duration}</p>
+                <p><strong>Темы курса:</strong></p>
                 {/* <Themes data={course.themes}></Themes> */}
-                <p>{course.courseId}</p>
+                {/* <p>{course.courseId}</p> */}
                 {/* <Link to={`tasks`}>something</Link> */}
 
                 {themes}
                 
-                <p><strong>Tasks</strong></p>
+                {/* <p><strong>Tasks</strong></p> */}
                 
               </Modal.Body>
               <Modal.Footer>
@@ -196,7 +189,7 @@ export default class Courses extends Component {
             </Modal>
 
 
-            <Button bsStyle="default" onClick={() => this.setState({ showUpdationModal: course.courseId })}>Edit</Button>
+            <Button bsStyle="default" onClick={() => this.setState({ showUpdationModal: course.courseId })}>Изменить</Button>
 
             <Modal
 
@@ -249,7 +242,7 @@ export default class Courses extends Component {
 
             <Button 
             
-            bsStyle="default" onClick={() => this.handleDelete(course.courseId)}>Delete</Button>
+            bsStyle="default" onClick={() => this.handleDelete(course.courseId)}>Удалить</Button>
 
           </ButtonToolbar>
 
@@ -264,8 +257,8 @@ export default class Courses extends Component {
     return (
    <div key={theme.themeID}>
    
-    <p>CourseId:{theme.courseId}</p>
-    <p>{theme.themeID}</p>
+    {/* <p>CourseId:{theme.courseId}</p> */}
+    {/* <p>{theme.themeID}</p> */}
     <p>{theme.themeName}</p>
    </div>
     )
@@ -275,8 +268,8 @@ export default class Courses extends Component {
     let cards = this.state.courses ? (this.state.courses.map(course => this.renderCourseBlock(course))) : <div>Loading courses...</div>; 
     return (
       <div>
-        <h1>Courses</h1>
-        <p>Here you can see your courses in this semester</p>
+        <h1>Курсы</h1>
+        <p>Здесь вы можете видеть курсы, к которым вы подключены</p>
         <div className="course-flex">
           {cards}
          
@@ -288,7 +281,7 @@ export default class Courses extends Component {
 
         <ButtonToolbar>
           <Button bsStyle="primary" onClick={this.handleShowCreationModal}>
-            Add new course
+            Добавить новый курс
             </Button>
 
           <Modal

@@ -9,6 +9,6 @@ namespace Education.Models
         public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) {
         }
 
-        public DbSet<SignInModel> signinmodels { get; set; }
+       
     }
 }

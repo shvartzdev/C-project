@@ -34,6 +34,16 @@
   margin: 0 2px 2px 2px,
 }
 
+.my-block {
+  margin: 0;
+  background: yellow;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%) 
+}
+
 .course-button {
   display: inline-block;
     border: 1px solid #eee;
